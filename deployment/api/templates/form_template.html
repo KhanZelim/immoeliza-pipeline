@@ -1,0 +1,142 @@
+<div class="container pt-5 px-2">
+    <form  method="post" action="/predict" >
+        <div class="row pb-2">
+            <div class="col-lg-4 mb-3">
+                <label for="modelchoise" class="form-label text-center">Which model do you wanna use?</label>
+                <select id='modelchoise' class="form-select" aria-label="Default select example" name="modelchoise">
+                    <option value="Linear">Linear Regression</option>
+                    <option value="RandomForest">Random Forest</option>
+                    <option value="XGB" selected>XGBoost</option>
+                  </select>
+            </div>
+    
+
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-4 mb-3">
+                <label for="subtype_select" class="form-label">Select type of property</label>
+                <select id='subtype_select' class="form-select" aria-label="Default select example" name="subtype">
+                    {{ options_html | safe }}
+                </select>
+            </div>
+            
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-6 mb-3">
+                <div class="row">
+                <label for="postal_code_input" class="form-label ">Enter propertis Postal code</label>
+                {% if error_msg %}
+                <div class="form-text" style='color: red;'' id="basic-addon4">Postal code is incorrect</div>
+                {% endif %}
+                </div>
+                <div class="row ">
+                    <div class="col-3">
+                    <input type="text" class="form-control " id="postal_code_input" name="postal_code">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="num_of_room_range" class="form-label">How many rooms has your property?</label>
+                <input type="range" class="form-range" id="num_of_room_range" name="number_of_rooms"
+                min="{{ config['num_of_room_range']['min'] }}" 
+                max="{{ config['num_of_room_range']['max'] }}" 
+                step="{{ config['num_of_room_range']['step'] }}" 
+                value="{{ config['num_of_room_range']['mode'] }}" 
+                oninput="this.nextElementSibling.value = this.value" >
+                <output>{{ config['num_of_room_range']['mode'] }}</output>
+            </div>
+
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-6 mb-3">
+                <label for="living_area_range" class="form-label"> Specify the area of the living space.</label>
+                <input type="range" class="form-range" id="iving_area_range"  name = 'living_area'
+                min="{{ config['living_area_range']['min'] }}" 
+                max="{{ config['living_area_range']['max'] }}" 
+                step="{{ config['living_area_range']['step'] }}" 
+                value="{{ config['living_area_range']['mode'] }}" 
+                oninput="this.nextElementSibling.value = this.value" >
+            <output>{{ config['living_area_range']['mode'] }}</output>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="land_area_range" class="form-label">Specify the area of the attached territory.</label>
+                <input type="range" class="form-range" id="land_area_range" name = 'land_area'
+                min="{{ config['living_area_range']['min'] }}" 
+                max="{{ config['land_area_range']['max'] }}" 
+                step="{{ config['land_area_range']['step'] }}" 
+                value="{{ config['land_area_range']['min'] }}" 
+                oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config['land_area_range']['min'] }}</output>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-6 mb-3">
+                <label for="garden_range" class="form-label"> Specify the area of the garden.</label>
+                <input type="range" class="form-range" id="garden_range" name="garden"
+                min="{{ config['garden_range']['min'] }}" 
+                max="{{ config['garden_range']['max'] }}" 
+                step="{{ config['garden_range']['step'] }}" 
+                value="{{ config['garden_range']['min'] }}" 
+                oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config['garden_range']['min'] }}</output>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="terrace_surface_range" class="form-label">Specify the area of the terrace.</label>
+                <input type="range" class="form-range" id="terrace_surface_range" name="terrace"
+                min="{{ config['terrace_surface_range']['min'] }}" 
+                max="{{ config['terrace_surface_range']['max'] }}" 
+                step="{{ config['terrace_surface_range']['step'] }}" 
+                value="{{ config['terrace_surface_range']['min'] }}" 
+                oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config['terrace_surface_range']['min'] }}</output>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-lg-6 mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="open_fire_check" name="open_fire">
+                    <label class="form-check-label" for="open_fire_check">Open fire</label>
+                  </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="swiming_pool_check" name="swiming_pool" >
+                    <label class="form-check-label" for="swiming_pool_check">Swimming pool</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="Furnished_check" name="furnished">
+                    <label class="form-check-label" for="Furnished_check">Furnished</label>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="row pt-2">
+                    <div class="col-lg-4 mb-3">
+                        <label for="state_of_building_select" class="form-label">What is the condition of the building?</label>
+                        <select id='sstate_of_building_select' class="form-select"  name="state_of_building">
+                            <option value="0">To restore</option>
+                            <option value="1">To renovate</option>
+                            <option value="2">To be done up</option>
+                            <option value="4">Just renovated</option>
+                            <option value="5" selected>Good</option>
+                            <option value="6">As new</option>
+                        </select>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-lg-4 mb-3">
+                            <label for="kitchen_select" class="form-label">How well-equipped is the kitchen?</label>
+                            <select id='kitchen_select' class="form-select"  name="equipped_kitchen">
+                                <option value="0">Not instaled</option>
+                                <option value="1">Semi equipped</option>
+                                <option value="3" selected>Instaled</option>
+                                <option value="4">Hyper Equipped</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <button class="btn btn-lg btn-dark col-lg-2" type="submit">Predict Price</button>
+        </div>
+    </form>
+</div>

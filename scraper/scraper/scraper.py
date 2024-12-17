@@ -143,6 +143,7 @@ class Scraper():
             my_dict['price'] = house_raw_dict["price"]["mainValue"]
             my_dict['type_of_property'] = house_raw_dict["property"]["type"]
             my_dict['subtype_of_property'] = house_raw_dict["property"]["subtype"]
+            my_dict['number_of_rooms'] = house_raw_dict['property']['bedroomCount']
             my_dict['living_area'] = house_raw_dict["property"]["netHabitableSurface"]
             if house_raw_dict["transaction"]["sale"]["isFurnished"] is None:
                 my_dict['furnished'] = None

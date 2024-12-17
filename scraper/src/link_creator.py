@@ -73,8 +73,11 @@ class LinkCreator():
         self.final_postcode_dict = {}
         self.timeout = httpx.Timeout(50.0)
         self.semaphore = asyncio.Semaphore(10) 
+        self.First_run = True
+        self.base_dict = None
 
     def run_as(self,coro)->None:
+
         """
             Method checks if there is a running loop if it so, creates and run thread with coroutine, otherwise run corutine in a loop
             :param: coro, coroutien function
@@ -92,6 +95,12 @@ class LinkCreator():
             print('Starting new event loop')
             return asyncio.run(coro)
 
+    def init_second_run(self):
+        self.First_run = False
+        filepath = 'data/links/base_houselinks_for_postcode.json'
+        with open(filepath,'r') as f:
+            self.base_dict = json.load(f)
+    
     def get_postcode_dict(self):
         """
         Method that creates a dictionary with all postcodes of Belgium as keys and name of area as the value, and cleans up the city name by removing spaces and non-ASCII characters.
@@ -125,7 +134,7 @@ class LinkCreator():
             self.link_dict[key] = f'https://www.immoweb.be/en/search/house-and-apartment/for-sale/{self.postcode_dict[key]}/{key}?countries=BE&page=1&orderBy=relevance'
         return self.link_dict
     
-    def get_houselinks_for_pcode(self,content):
+    def get_houselinks_for_pcode(self,content,postal_code):
         """
             Method that scrapes all house links from a search result link on Immoweb for a specific postcode.
             :params: str content, The content of the response to a request for a search result link.
@@ -136,7 +145,15 @@ class LinkCreator():
             soup = BeautifulSoup(content,'html.parser')
             for elem in soup.find_all('a',attrs= {"class":"card__title-link"}):
                 if elem.get('href').find('new-real-estate-project-apartments') == -1 and elem.get('href').find('new-real-estate-project-houses') == -1 :
-                    link_list.append(elem.get('href'))
+                    if self.First_run:
+                        link_list.append(elem.get('href'))
+                    else:
+                        if elem.get('href') not in self.base_dict[postal_code]:
+                            link_list.append(elem.get('href'))
+                            self.base_dict[postal_code].append(elem.get('href'))
+                        else:
+                            continue
+
 
         except Exception as e:
             print(e)
@@ -163,7 +180,7 @@ class LinkCreator():
                     resp = await session.get(link, headers=self.headers, timeout=self.timeout)
                     if resp.status_code == 200:
                         #print(f"Success for {link}")
-                        self.final_postcode_dict[key] = self.get_houselinks_for_pcode(resp.content)
+                        self.final_postcode_dict[key] = self.get_houselinks_for_pcode(resp.content,key)
                         return True
                     else:
                         #print(f"Failed with status code {resp.status_code} for {link}")
@@ -200,5 +217,12 @@ class LinkCreator():
             :param: str filepath, the name of file; houselinks_for_postcode.json by default
             :return: None
         """
-        with open(filepath,mode='w',encoding='utf8') as write_file:
-            json.dump(self.final_postcode_dict,write_file,ensure_ascii=False)
+        if self.First_run:
+            with open('data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
+                json.dump(self.final_postcode_dict,write_file,ensure_ascii=False)
+        else:
+            with open('data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
+                json.dump(self.base_dict,write_file,ensure_ascii=False)
+            
+            with open(filepath,mode='w',encoding='utf8') as write_file:
+                json.dump(self.final_postcode_dict,write_file,ensure_ascii=False)

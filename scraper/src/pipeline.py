@@ -2,7 +2,7 @@ import json
 from .link_creator import LinkCreator
 from scraper.scraper import Scraper
 import csv
-
+from datetime import datetime
 
 
 
@@ -35,15 +35,25 @@ class Pipeline():
         self.link_creator.create_final_dict()
         #print(self.link_creator.final_postcode_dict)
         self.link_creator.to_json_file()
+    
+    def colect_extra_links(self):
+        print('Collecting extra links...')
+        self.link_creator.init_second_run()
+        self.link_creator.create_final_dict()
+        self.link_creator.to_json_file()
+
         
-    def scrap_data(self):
+    def scrap_data(self,path = ''):
         """
             Method that scrapes data for all links from the JSON file created with collect_links, writes the data to a JSON file, and returns houses_raw_data_dict using instance of Scraper.
             :return: dict houses_raw_data_dict, a dictionary with raw data.
         """
 
         print('Scraping_data')
-        self.scraper.upload_data_from_json()
+        if path == '':
+            self.scraper.upload_data_from_json()
+        else:
+            self.scraper.upload_data_from_json(filepath=path)
         self.scraper.run_as(self.scraper.get_full_raw_data_set())
         self.scraper.raw_data_to_json()
         print(f'All data scraped\n Number of records: {len(self.scraper.houses_raw_data_dict)}')
@@ -68,15 +78,23 @@ class Pipeline():
             for dict in self.dictionary_list_for_transfer:
                 writer.writerow(dict)
 
-    def run(self,filepath):
+    def run(self,filepath='base_row_properties.csv'):
         """
         Method that gathers all steps together
         """
         self.colect_links()
-        a = self.scrap_data()
+        a = self.scrap_data(path='data/links/base_houselinks_for_postcode.json')
         self.prepare_data()
         self.save_to_csv(filepath)
         
 
+    def run_again(self):
+        current_datetime = datetime.now().strftime("%d.%m.%Y")
+        filepath = f'row_properties_{current_datetime}.csv'
+        self.colect_extra_links()
+        a = self.scrap_data()
+        self.prepare_data()
+        self.save_to_csv(filepath)
+        
 
 

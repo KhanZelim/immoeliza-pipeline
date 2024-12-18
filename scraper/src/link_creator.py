@@ -150,7 +150,6 @@ class LinkCreator():
                     else:
                         if elem.get('href') not in self.base_dict[postal_code]:
                             link_list.append(elem.get('href'))
-                            self.base_dict[postal_code].append(elem.get('href'))
                         else:
                             continue
 
@@ -160,10 +159,16 @@ class LinkCreator():
         if len(link_list) <= 30 :
             return []
         elif len(link_list) ==60:
+            if not self.First_run:
+                [self.base_dict[postal_code].append(x) for x in link_list[:15]]
             return(link_list[:15])
         elif len(link_list) >=40:
+            if not self.First_run:
+                [self.base_dict[postal_code].append(x) for x in link_list[:10]]
             return link_list[:10]
         else:
+            if not self.First_run:
+                [self.base_dict[postal_code].append(x) for x in link_list[:-30]]
             return link_list[:-30]
     
     async def if_link_is_goed(self,link, session, key):
@@ -179,7 +184,7 @@ class LinkCreator():
                 try:
                     resp = await session.get(link, headers=self.headers, timeout=self.timeout)
                     if resp.status_code == 200:
-                        #print(f"Success for {link}")
+                        # print(f"Success for {link}")
                         self.final_postcode_dict[key] = self.get_houselinks_for_pcode(resp.content,key)
                         return True
                     else:

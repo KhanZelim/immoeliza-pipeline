@@ -191,6 +191,9 @@ class Scraper():
             except:
                 my_dict["state_of_building"] = None
             my_dict['type_of_sale'] = house_raw_dict["transaction"]["type"]
+            my_dict['street'] = house_raw_dict['property']['location']['street']
+            my_dict['lon'] = house_raw_dict['property']['location']['longitude']
+            my_dict['lat'] = house_raw_dict['property']['location']['latitude']
         if len(my_dict) > 1:
             #print(my_dict)
             return my_dict

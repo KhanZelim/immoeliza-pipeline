@@ -93,8 +93,8 @@ class Categorical_encoder:
 
 
     def save_to_csv(self):
-        self.X_train.drop(['Unnamed: 0','facades','property_id','type_of_property','province'],axis=1,inplace=True)
-        self.X_test.drop(['Unnamed: 0','facades','property_id','type_of_property','province'],axis=1,inplace=True)
+        self.X_train.drop(['Unnamed: 0','facades','property_id','type_of_property'],axis=1,inplace=True)
+        self.X_test.drop(['Unnamed: 0','facades','property_id','type_of_property'],axis=1,inplace=True)
         self.X_train.to_csv(f'data/encoded_X_train.csv')
         self.X_test.to_csv('data/encoded_X_test.csv')
         self.y_train.to_csv('data/encoded_y_train.csv')

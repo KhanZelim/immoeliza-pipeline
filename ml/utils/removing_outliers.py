@@ -4,7 +4,7 @@ import pandas as pd
 class Outlier_remover():
     def __init__(self,column_list : list = ['price','number_of_rooms','living_area','land_area']) -> None:
         self.df = pd.read_csv('data/clean_data_no_mv.csv')
-        self.columns_to_be_droped = ['Unnamed: 0','Unnamed: 0.1','link','type_of_sale','postal_code_str','locality_name']
+        self.columns_to_be_droped = ['Unnamed: 0','link','type_of_sale','locality_name','street','lon','lat']
         self.columns_with_outliers = column_list
         self.df.drop(self.columns_to_be_droped,axis=1,inplace=True)
 

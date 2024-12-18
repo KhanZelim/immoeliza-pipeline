@@ -1,8 +1,6 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error,root_mean_squared_error
-from sklearn.ensemble import RandomForestRegressor,GradientBoostingRegressor
 from xgboost import XGBRegressor
 import joblib
 

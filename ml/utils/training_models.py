@@ -27,7 +27,6 @@ class Models_trainer:
             model = regressor.fit(self.X_train,self.y_train)
             regressor.score(self.X_train,self.y_train)
             self.empty_df = self.X_test[0:0]
-            print(self.empty_df)
             test_prediction = regressor.predict(self.X_test)
             regressor.score(self.X_test,self.y_test)
             print(f'train score : {regressor.score(self.X_train,self.y_train)}')
@@ -53,9 +52,9 @@ class Models_trainer:
         
         def saving_LinearRegressionModel(self):
               model = self.train_linearregression()
-              joblib.dump(model, 'linear_regression_model.joblib')
+              joblib.dump(model, '../deployment/data/models/linear_regression_model.joblib')
               joblib.dump(self.empty_df,'empty_df.joblib')
 
         def saving_XGBmodel(self):
               model = self.train_xgb()
-              model.save_model('Xgbtrained.json')
+              model.save_model('../deployment/data/models/Xgbtrained.json')

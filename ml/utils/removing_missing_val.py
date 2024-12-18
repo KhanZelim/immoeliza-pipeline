@@ -4,7 +4,7 @@ import pandas as pd
 
 class Missing_value_remover():
     def __init__(self) -> None:
-        self.df = pd.read_csv('data/clean_data_with_mv.csv')
+        self.df = pd.read_csv('data/base_clean_data_with_mv.csv')
         self.mv_to_zero = {'garden':0, 'furnished':0, 'land_area':0}
 
 

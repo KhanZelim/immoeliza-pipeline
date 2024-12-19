@@ -3,7 +3,7 @@ import pandas as pd
 
 class Outlier_remover():
     def __init__(self,column_list : list = ['price','number_of_rooms','living_area','land_area']) -> None:
-        self.df = pd.read_csv('data/clean_data_no_mv.csv')
+        self.df = pd.read_csv('./ml/data/clean_data_no_mv.csv')
         self.columns_to_be_droped = ['Unnamed: 0','link','type_of_sale','locality_name','street','lon','lat']
         self.columns_with_outliers = column_list
         self.df.drop(self.columns_to_be_droped,axis=1,inplace=True)
@@ -16,7 +16,7 @@ class Outlier_remover():
         outliers = self.df[(self.df[column_name]< Q1 - threshold * IQR)|(self.df[column_name] >  Q3 + threshold * IQR)&(self.df.subtype_of_property != 'CASTLE')]
         self.df = self.df.drop(outliers.index)
 
-    def save_to_csv(self,path: str = 'data/clean_data_no_outliers.csv'):
+    def save_to_csv(self,path: str = './ml/data/clean_data_no_outliers.csv'):
        self.df.to_csv(path) 
 
     def remove_all_outliers(self):

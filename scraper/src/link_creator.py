@@ -97,7 +97,7 @@ class LinkCreator():
 
     def init_second_run(self):
         self.First_run = False
-        filepath = 'data/links/base_houselinks_for_postcode.json'
+        filepath = './scraper/data/links/base_houselinks_for_postcode.json'
         with open(filepath,'r') as f:
             self.base_dict = json.load(f)
     
@@ -108,7 +108,7 @@ class LinkCreator():
         :param: None
         :return: None
         """
-        with open('data/postal-codes.json','r') as file:
+        with open('./scraper/data/postal-codes.json','r') as file:
             dictinary  = json.load(file)
             for i in dictinary:
                 if i['mun_name_nl']:
@@ -184,11 +184,11 @@ class LinkCreator():
                 try:
                     resp = await session.get(link, headers=self.headers, timeout=self.timeout)
                     if resp.status_code == 200:
-                        # print(f"Success for {link}")
+                        print(f"Success for {link}")
                         self.final_postcode_dict[key] = self.get_houselinks_for_pcode(resp.content,key)
                         return True
                     else:
-                        #print(f"Failed with status code {resp.status_code} for {link}")
+                        print(f"Failed with status code {resp.status_code} for {link}")
                         self.failed_links_list.append(link)
                         return False
                 except httpx.TimeoutException:
@@ -216,17 +216,17 @@ class LinkCreator():
         #print(res.count(True))
         #print(res.count(False))
     
-    def to_json_file(self, filepath : str = 'data/links/houselinks_for_postcode.json')-> None:
+    def to_json_file(self, filepath : str = './scraper/data/links/houselinks_for_postcode.json')-> None:
         """
             Method creates json file with filepath name 
             :param: str filepath, the name of file; houselinks_for_postcode.json by default
             :return: None
         """
         if self.First_run:
-            with open('data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
+            with open('./scraper/data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
                 json.dump(self.final_postcode_dict,write_file,ensure_ascii=False)
         else:
-            with open('data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
+            with open('./scraper/data/links/base_houselinks_for_postcode.json',mode='w',encoding='utf8') as write_file:
                 json.dump(self.base_dict,write_file,ensure_ascii=False)
             
             with open(filepath,mode='w',encoding='utf8') as write_file:

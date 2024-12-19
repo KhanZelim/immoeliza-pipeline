@@ -4,7 +4,7 @@ import pandas as pd
 
 class Missing_value_remover():
     def __init__(self) -> None:
-        self.df = pd.read_csv('data/base_clean_data_with_mv.csv')
+        self.df = pd.read_csv('./ml/data/base_clean_data_with_mv.csv')
         self.mv_to_zero = {'garden':0, 'furnished':0, 'land_area':0}
 
 
@@ -60,7 +60,7 @@ class Missing_value_remover():
     def set_unknown_cat_for_categorical(self):
         self.df = self.df.fillna(value={'state_of_building':'UNKNOWN', 'equipped_kitchen':'UNKNOWN'})
 
-    def save_to_csv(self,path:str = 'data/clean_data_no_mv.csv'):
+    def save_to_csv(self,path:str = './ml/data/clean_data_no_mv.csv'):
         self.df.to_csv(path)
 
     def remov_all_missing_values(self):

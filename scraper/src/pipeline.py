@@ -83,7 +83,7 @@ class Pipeline():
         Method that gathers all steps together
         """
         self.colect_links()
-        a = self.scrap_data(path='data/links/base_houselinks_for_postcode.json')
+        a = self.scrap_data(path='./scraper/data/links/base_houselinks_for_postcode.json')
         self.prepare_data()
         self.save_to_csv(filepath)
         

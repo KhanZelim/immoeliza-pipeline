@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from celery import Celery
 import sys
 import os
 
@@ -11,18 +12,22 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../ml')
 from scraper.src.pipeline import Pipeline
 from ml.utils.creator import Creator
 
+# Define Celery application
+celery = Celery('airflow', broker='redis://localhost:6379/0')
+
 default_args = {
     'owner': 'Ihor',
     'retries': 3,
     'depends_on_past': False,
     'retry_delay': timedelta(minutes=2),
+    'executor':'CeleryExecutor',
 }
 
 def collect_extra_links(pipeline):
     pipeline.colect_extra_links()
 
 def scrap_data(pipeline):
-    return pipeline.scrap_data()
+    pipeline.scrap_data()
 
 def prepare_data(pipeline):
     pipeline.prepare_data()

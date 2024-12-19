@@ -1,0 +1,13 @@
+pipeline_env/
+
+dags/download_rocket_launches.py
+scraper/main.py
+test.py
+scraper/scraper/__pycache__/
+
+scraper/src/__pycache__/
+.DS_Store
+ml/utils/__pycache__/
+dags/__pycache__/
+ml/__pycache__/
+scraper/__pycache__/

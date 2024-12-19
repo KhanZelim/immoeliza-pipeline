@@ -4,6 +4,9 @@ on:
     - cron: "0 1 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write 
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -28,6 +31,10 @@ jobs:
         python scraper/main.py
     - name: List directory
       run: ls -R
+
+    - name: Checkout branch
+      run: git checkout modifying_scraper
+
 
     - name: Commit and push output file
       run: |

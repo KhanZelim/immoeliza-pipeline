@@ -26,3 +26,5 @@ jobs:
     - name: Run scraper
       run: |
         python scraper/main.py
+    - name: List directory
+      run: ls -R

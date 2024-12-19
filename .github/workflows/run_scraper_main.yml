@@ -28,3 +28,11 @@ jobs:
         python scraper/main.py
     - name: List directory
       run: ls -R
+
+    - name: Commit and push output file
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Add output file from scraper"
+        git push

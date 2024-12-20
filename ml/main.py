@@ -1,8 +1,8 @@
 from utils.creator import Creator
 
-
-creator = Creator()
-creator.create_models()
+if __name__ == "__main__":
+    creator = Creator()
+    creator.create_models()
 
 
 # LinearRegression

@@ -4,23 +4,6 @@ from pandas.api.types import is_numeric_dtype
 import numpy as np
 import os
 
-def combine_data():
-
-    base_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../scraper/data/base_row_properties.csv')
-    current_datetime = datetime.now().strftime("%d.%m.%Y")  
-    extra_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../scraper/data/row_properties_{current_datetime}.csv')
-    # extra_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../scraper/data/row_properties_17.12.2024.csv')
-    # Check if the extra file exists
-    if not os.path.exists(extra_file):
-        print(f"Error: The file {extra_file} does not exist.")
-        return None
-    base_data = pd.read_csv(base_file)
-    extra_data = pd.read_csv(extra_file)
-
-    # Combine the two datasets
-    combined_data = pd.concat([base_data, extra_data], ignore_index=True)
-
-    return combined_data 
 
 def clean_data(df):
     
@@ -50,15 +33,37 @@ def clean_data(df):
 
         df = df.astype(convert_dict)
 
-    return df  
+    return df 
 
-def main():
-    combined_data = combine_data()
+
+def combine_data(file_name = None):
+    base_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../ml/data/base_clean_data_with_mv.csv')
+    current_datetime = datetime.now().strftime("%d.%m.%Y")
+    if file_name:
+        extra_file =   os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../scraper/data/{file_name}')
+    else:
+        extra_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../scraper/data/row_properties_{current_datetime}.csv')
+    # extra_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../scraper/data/row_properties_17.12.2024.csv')
+    # Check if the extra file exists
+    if not os.path.exists(extra_file):
+        print(f"Error: The file {extra_file} does not exist.")
+        return None
+    base_data = pd.read_csv(base_file)
+    extra_data = pd.read_csv(extra_file)
+    extra_data = clean_data(extra_data)
+
+    # Combine the two datasets
+    combined_data = pd.concat([base_data, extra_data], ignore_index=True)
+
+    return combined_data 
+
+ 
+
+def merge_data(file_name = None):
+    combined_data = combine_data(file_name=file_name)
     if combined_data is None:
         return  
     
-    cleaned_data = clean_data(combined_data)
-
     # path to the ml/data folder
     cleaned_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ml', 'data', 'base_clean_data_with_mv.csv')
     cleaned_dir = os.path.dirname(cleaned_filepath)
@@ -66,8 +71,8 @@ def main():
     if not os.path.exists(cleaned_dir):
         os.makedirs(cleaned_dir)  
 
-    cleaned_data.to_csv(cleaned_filepath, index=False)
+    combined_data.to_csv(cleaned_filepath, index=False)
     print(f"Data has been successfully combined, cleaned, and saved to {cleaned_filepath}")
 
 
-main()
+

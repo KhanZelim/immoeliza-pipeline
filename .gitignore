@@ -11,3 +11,4 @@ ml/utils/__pycache__/
 dags/__pycache__/
 ml/__pycache__/
 scraper/__pycache__/
+analysis/__pycache__/

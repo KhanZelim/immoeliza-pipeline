@@ -7,7 +7,7 @@ if __name__ == "__main__":
     start = time.strftime("%H:%M:%S", start_time)
     print(start)
     pipeline = Pipeline()
-    pipeline.run(input('Enter name of csv file that you want to save'))
+    pipeline.run_again()
     finish_time = time.localtime()
     finish = time.strftime("%H:%M:%S", finish_time)
     print(finish)

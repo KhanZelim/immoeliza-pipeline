@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 class Categorical_encoder:
     def __init__(self,columns_to_onehot:list=['subtype_of_property','postal_code'],random_state:int=124) -> None:
-        self.df = pd.read_csv('data/clean_data_no_outliers.csv')
+        self.df = pd.read_csv('./ml/data/clean_data_no_outliers.csv')
         self.columns_to_onehot = columns_to_onehot
         self.df = self.df.dropna()
         self.X = None
@@ -93,12 +93,12 @@ class Categorical_encoder:
 
 
     def save_to_csv(self):
-        self.X_train.drop(['Unnamed: 0','facades','property_id','type_of_property','province'],axis=1,inplace=True)
-        self.X_test.drop(['Unnamed: 0','facades','property_id','type_of_property','province'],axis=1,inplace=True)
-        self.X_train.to_csv(f'data/encoded_X_train.csv')
-        self.X_test.to_csv('data/encoded_X_test.csv')
-        self.y_train.to_csv('data/encoded_y_train.csv')
-        self.y_test.to_csv('data/encoded_y_test.csv')
+        self.X_train.drop(['Unnamed: 0','facades','property_id','type_of_property'],axis=1,inplace=True)
+        self.X_test.drop(['Unnamed: 0','facades','property_id','type_of_property'],axis=1,inplace=True)
+        self.X_train.to_csv(f'./ml/data/encoded_X_train.csv')
+        self.X_test.to_csv('./ml/data/encoded_X_test.csv')
+        self.y_train.to_csv('./ml/data/encoded_y_train.csv')
+        self.y_test.to_csv('./ml/data/encoded_y_test.csv')
 
     # def encode_df(self,df):
     #     # self.kitchen_type_ordinal_encode(df)

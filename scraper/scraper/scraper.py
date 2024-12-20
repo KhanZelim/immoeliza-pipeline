@@ -34,7 +34,7 @@ class Scraper():
 
     def __init__(self) -> None:
         self.headers = {"User-Agent":'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:130.0) Gecko/20100101 Firefox/130.0'}
-        self.json_path = 'data/links/houselinks_for_postcode.json'
+        self.json_path = './scraper/data/links/houselinks_for_postcode.json'
         self.timeout = httpx.Timeout(50.0)
         self.semaphore = asyncio.Semaphore(10)
         self.link_dict = {}
@@ -191,6 +191,9 @@ class Scraper():
             except:
                 my_dict["state_of_building"] = None
             my_dict['type_of_sale'] = house_raw_dict["transaction"]["type"]
+            my_dict['street'] = house_raw_dict['property']['location']['street']
+            my_dict['lon'] = house_raw_dict['property']['location']['longitude']
+            my_dict['lat'] = house_raw_dict['property']['location']['latitude']
         if len(my_dict) > 1:
             #print(my_dict)
             return my_dict
@@ -202,7 +205,7 @@ class Scraper():
         Method that reads all dictionaries with cleaned data from data/raw_data_houses.json and adds them to a list for creating a CSV file.
         :return: list houses_cleaned_data_list, a list of dictionaries with cleaned data.
         """
-        with open('data/raw_data_houses.json','r') as file:
+        with open('./scraper/data/raw_data_houses.json','r') as file:
             goal_dict = json.load(file)
         for key,dicti in goal_dict.items():
             cleand_dict = self.clean_up_house_data(dicti,key)
@@ -210,7 +213,7 @@ class Scraper():
                 self.houses_cleaned_data_list.append(cleand_dict)
         return self.houses_cleaned_data_list
 
-    def raw_data_to_json(self,filename : str = 'data/raw_data_houses.json') -> None:
+    def raw_data_to_json(self,filename : str = './scraper/data/raw_data_houses.json') -> None:
         """
         Method that writes raw data from houses_raw_data_dict to a JSON file.
         :param filename: str, filepath to the future file.

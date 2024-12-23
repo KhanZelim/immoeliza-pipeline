@@ -1,5 +1,5 @@
 # immoeliza-pipeline
-https://img.shields.io/badge/made_with-Github_Actions-%232088FF?style=for-the-badge&logo=githubactions&logoColor=%232088FF&color=%239E95B7
+![https://img.shields.io/badge/made_with-Github_Actions-%232088FF?style=for-the-badge&logo=githubactions&logoColor=%232088FF&color=%239E95B7]
 
 
 
@@ -50,7 +50,8 @@ The pipeline is a combination of data scraping, model training, and automation p
 │       └── images 
         └── house_distribution.py
         └── merge_data.py
-        └── price_distribution.py                      
+        └── price_distribution.py   
+├── assets                   
 ├── deployment
 ├── ml
 ├── scraper/

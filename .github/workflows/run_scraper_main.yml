@@ -29,12 +29,20 @@ jobs:
     - name: Run scraper
       run: |
         python scraper/main.py
+    
+    - name: Clean and Merge New Data
+      run: |
+        python analysis/main.py
+    
+    - name: Retrain model 
+      run: |
+        python ml/main.py
+
     - name: List directory
       run: ls -R
 
     - name: Checkout branch
       run: git checkout modifying_scraper
-
 
     - name: Commit and push output file
       run: |

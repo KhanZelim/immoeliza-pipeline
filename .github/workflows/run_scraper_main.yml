@@ -44,7 +44,6 @@ jobs:
     - name: Checkout branch
       run: git checkout modifying_scraper
 
-
     - name: Commit and push output file
       run: |
         git config --global user.name "github-actions[bot]"

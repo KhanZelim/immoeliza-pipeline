@@ -1,5 +1,5 @@
 # immoeliza-pipeline
-![https://img.shields.io/badge/made_with-Github_Actions-%232088FF?style=for-the-badge&logo=githubactions&logoColor=%232088FF&color=%239E95B7]
+![Made with GitHub Actions](https://img.shields.io/badge/made_with-Github_Actions-%232088FF?style=for-the-badge&logo=githubactions&logoColor=%232088FF&color=%239E95B7)
 
 
 

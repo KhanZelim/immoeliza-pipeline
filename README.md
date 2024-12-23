@@ -84,7 +84,7 @@ This project took six days for completion.
 
 This project was done as part of the AI Boocamp at BeCode.org. 
 
-* Zelim Khan (https://www.linkedin.com/in/zelimkhan-jachichanov/)
-* Veena Bhawani (https://www.linkedin.com/in/veena-bhawani-b41804111/)
-* Ihor Afanasiev (https://www.linkedin.com/in/ihor-afanasiev-a50798268/)
-* Dhrisya Kesavadas (https://www.linkedin.com/in/dhrisya-kesavavadas-442672235/)
+* ![Zelim Khan](https://www.linkedin.com/in/zelimkhan-jachichanov/)
+* ![Veena Bhawani](https://www.linkedin.com/in/veena-bhawani-b41804111/)
+* ![Ihor Afanasiev](https://www.linkedin.com/in/ihor-afanasiev-a50798268/)
+* ![Dhrisya Kesavadas](https://www.linkedin.com/in/dhrisya-kesavavadas-442672235/)

@@ -1,21 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 import numpy as np
-import seaborn as sb
+import seaborn as sns
 import matplotlib.pyplot as plt
+from pandas.api.types import is_numeric_dtype
 
 # Load the file to the data_set
 file = "D:\\BeCode\\Projects\\immoeliza-pipeline\\scraper\\data\\maintest.csv"
 df= pd.read_csv(file)
-
-
-# In[ ]:
-
 
 if (df.isnull().sum().sum()) != 0:
 
@@ -28,13 +19,8 @@ if (df.isnull().sum().sum()) != 0:
     #write final output to csv
     df.to_csv("D:\\BeCode\\Projects\\immoeliza-pipeline\\scraper\\data\\raw_properties.csv")
 
-
-# In[5]:
-
-
 numeric_columns_df =  df[["property_id","living_area","price","postal_code",
                           "terrace_surface","garden","land_area", "facades","open_fire","swimming_pool","furnished"]]
-
 
 all_columns_dtypes = df.dtypes 
 # check the selected columns are numeric same as the one specified
@@ -51,14 +37,6 @@ if(not is_all_numeric):
             convert_dict[column] = np.float64     
     df = df.astype(convert_dict)
     df.to_csv("D:\\BeCode\\Projects\\immoeliza-pipeline\\scraper\\data\\raw_properties.csv")
-
-
-# In[8]:
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Load the data
 file_path = 'D:\\BeCode\\Projects\\immoeliza-pipeline\\scraper\\data\\raw_properties.csv'  # Replace with your file path
@@ -91,13 +69,6 @@ plt.xticks(rotation=45)
 plt.legend(title='Property Type')
 plt.tight_layout()
 plt.show()
-
-
-# In[10]:
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
 
 # Load the data
 file_path = 'D:\\BeCode\\Projects\\immoeliza-pipeline\\scraper\\data\\raw_properties.csv'  # Replace with your file path
@@ -133,4 +104,3 @@ plt.xticks(rotation=45)
 plt.legend(title='Property Type')
 plt.tight_layout()
 plt.show()
-

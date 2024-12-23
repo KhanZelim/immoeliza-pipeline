@@ -184,4 +184,4 @@ map_task = PythonOperator(
 )
 
 # Set task dependencies
-combine_task >> clean_task >> save_task >> plot_task
+combine_task >> clean_task >> save_task >> plot_task >> map_task
